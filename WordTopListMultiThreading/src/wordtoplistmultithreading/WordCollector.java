@@ -28,7 +28,7 @@ public class WordCollector implements Callable {
     private final Set<String> skipWords;
     private final Set<Character> separators;
     private final WordStore storer;
-    private final static Logger LOGGER = Logger.getLogger(WordCollector.class.getName());
+    public final static Logger LOGGER = Logger.getLogger(WordCollector.class.getName());
 
     public WordCollector(URL url, WordStore storer, Set<String> skipWords) {
         this.url = url;
@@ -70,7 +70,6 @@ public class WordCollector implements Callable {
         LOGGER.info("Processing of the homepage " + url.toString() + " started");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {
             String openingTag = findOpeningTag(reader);
-            LOGGER.info(openingTag + " (as opening tag) identified.");
             eatTag(openingTag, reader);
         }
     }

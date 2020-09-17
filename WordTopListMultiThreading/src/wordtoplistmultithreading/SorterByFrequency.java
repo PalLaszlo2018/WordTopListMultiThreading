@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 
 /**
  * This class can be used to create sorting by frequency
@@ -28,9 +29,12 @@ public class SorterByFrequency implements WordStore {
      */
 
     @Override
-    public void store(String word) {
+    public synchronized void  store(String word) {
         if (word.length() > 1 && !skipWords.contains(word)) {
             wordFrequency.put(word, wordFrequency.getOrDefault(word, 0) + 1);
+            if (word.length() > 12) {
+                WordCollector.LOGGER.log(Level.INFO, "Thread-X added word={0}", word);
+            }
         }
     }
     

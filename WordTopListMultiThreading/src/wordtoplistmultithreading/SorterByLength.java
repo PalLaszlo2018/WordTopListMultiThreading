@@ -26,7 +26,7 @@ public class SorterByLength implements WordStore {
      */
 
     @Override
-    public void store(String word) {
+    public synchronized void store(String word) {
         if (word.length() > 1 && !skipWords.contains(word)) {
             words.add(word);
         }
