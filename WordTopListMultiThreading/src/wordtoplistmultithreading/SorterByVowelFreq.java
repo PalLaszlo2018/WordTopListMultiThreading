@@ -31,7 +31,7 @@ public class SorterByVowelFreq implements WordStore {
      */
 
     @Override
-    public void store(String word) {
+    public synchronized void store(String word) {
         if (word.length() > 1 && !skipWords.contains(word) && !wordVowelFreq.containsKey(word)) {
             double vowelFreq = countVowels(word) / (double) word.length();
             wordVowelFreq.put(word, vowelFreq);
