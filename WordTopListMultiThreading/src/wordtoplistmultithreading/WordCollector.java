@@ -28,7 +28,7 @@ public class WordCollector implements Callable {
     private final Set<String> skipWords;
     private final Set<Character> separators;
     private final WordStore storer;
-    public final static Logger LOGGER = Logger.getLogger(WordCollector.class.getName());
+    public final static Logger LOG = Logger.getGlobal();
 
     public WordCollector(URL url, WordStore storer, Set<String> skipWords) {
         this.url = url;
@@ -54,6 +54,7 @@ public class WordCollector implements Callable {
      * Fills up the skipWord Set using the overridden method of WordStore interface
      */
 
+
     public void fillSkipWords() {
         for (String skipWord : skipWords) {
             addSkipWord(skipWord);
@@ -67,7 +68,7 @@ public class WordCollector implements Callable {
      * @throws IOException
      */
     public void processContent(URL url) throws IOException {
-        LOGGER.info("Processing of the homepage " + url.toString() + " started");
+        LOG.info("Processing of the homepage " + url.toString() + " started");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {
             String openingTag = findOpeningTag(reader);
             eatTag(openingTag, reader);

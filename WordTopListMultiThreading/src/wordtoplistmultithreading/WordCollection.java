@@ -60,7 +60,7 @@ public class WordCollection {
     }
 
     /**
-     * Prints the n-sized top-list of the found words.
+     * Logs the n-sized top-list of the found words.
      *
      * @param n
      */
