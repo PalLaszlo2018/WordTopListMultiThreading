@@ -61,6 +61,10 @@ public class SorterByFrequency implements WordStore {
     @Override
     public void print(int n) {
         List<Map.Entry<String, Integer>> sortedList = sortedWordsByFreq();
+        if (sortedList.isEmpty()) {
+            System.out.println("No list was created.");
+            return;
+        }
         System.out.print("The " + n + " most used words:");
         for (int i = 0; i < n; i++) {
             System.out.print(" " + sortedList.get(i));
