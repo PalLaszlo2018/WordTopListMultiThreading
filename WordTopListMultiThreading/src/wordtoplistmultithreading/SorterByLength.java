@@ -32,9 +32,7 @@ public class SorterByLength implements WordStore {
     public synchronized void store(String word) {
         if (word.length() > 1 && !skipWords.contains(word)) {
             words.add(word);
-            if (word.length() > 12) { // TODO LP: please delete this condition, I would liket ot see all the words even if it makes the app slow
-                LOG.log(Level.INFO, Thread.currentThread().getName() + " added word={ " + word);
-            }
+            LOG.log(Level.INFO, Thread.currentThread().getName() + " added word = " + word);
         }
     }
 

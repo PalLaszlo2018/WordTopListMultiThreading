@@ -10,11 +10,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.logging.Level;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 /**
  * This class manages the processing of the got URLList, collects the words of the contents in a Map.
@@ -25,10 +28,24 @@ public class WordCollector implements Callable {
 
     private final URL url;
     private final Set<String> skipTags;
-    private final Set<String> skipWords; // TODO LP: I don't like that we store here and in the WordStore the skipWords but it's not a mistake
+    private final Set<String> skipWords;
     private final Set<Character> separators;
     private final WordStore storer;
-    public final static Logger LOG = Logger.getGlobal(); // TODO LP: please make to log nicer (we don't need "wordtoplistmultithreading.SorterByFrequency store")
+    public final static Logger LOG = Logger.getGlobal(); 
+    
+    static {
+        LOG.setUseParentHandlers(false);
+        ConsoleHandler handler = new ConsoleHandler();
+        handler.setFormatter(new SimpleFormatter() {
+            private static final String FORMAT = "[%1$tF %1$tT] [%2$-7s] %3$s %n";
+
+            @Override
+            public synchronized String format(LogRecord lr) {
+                return String.format(FORMAT, new Date(lr.getMillis()), lr.getLevel(), lr.getMessage());
+            }
+        });
+        LOG.addHandler(handler);
+    }
 
     public WordCollector(URL url, WordStore storer, Set<String> skipWords) {
         this.url = url;
@@ -45,8 +62,7 @@ public class WordCollector implements Callable {
         try {
             processContent(url);
         } catch (IOException ex) {
-            // TODO LP: I would put at least in the log message which URL failed and/or any other useful information
-            Logger.getLogger(WordCollector.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.severe("Processing of " + url.toString() + " failed.");       
         }
         return null;
     }
@@ -158,21 +174,4 @@ public class WordCollector implements Callable {
     public void addSkipWord(String word) {
         storer.addSkipWord(word);
     }
-
-    /**
-     * Prints the full list of the found words.
-     */
-    public void print() { //TODO delete
-        storer.print();
-    }
-
-    /**
-     * Prints the n-sized top-list of the found words.
-     *
-     * @param n
-     */
-    public void print(int n) { //TODO delete
-        storer.print(n);
-    }
-
 }
