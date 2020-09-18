@@ -25,10 +25,10 @@ public class WordCollector implements Callable {
 
     private final URL url;
     private final Set<String> skipTags;
-    private final Set<String> skipWords;
+    private final Set<String> skipWords; // TODO LP: I don't like that we store here and in the WordStore the skipWords but it's not a mistake
     private final Set<Character> separators;
     private final WordStore storer;
-    public final static Logger LOG = Logger.getGlobal();
+    public final static Logger LOG = Logger.getGlobal(); // TODO LP: please make to log nicer (we don't need "wordtoplistmultithreading.SorterByFrequency store")
 
     public WordCollector(URL url, WordStore storer, Set<String> skipWords) {
         this.url = url;
@@ -45,6 +45,7 @@ public class WordCollector implements Callable {
         try {
             processContent(url);
         } catch (IOException ex) {
+            // TODO LP: I would put at least in the log message which URL failed and/or any other useful information
             Logger.getLogger(WordCollector.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -53,8 +54,6 @@ public class WordCollector implements Callable {
     /**
      * Fills up the skipWord Set using the overridden method of WordStore interface
      */
-
-
     public void fillSkipWords() {
         for (String skipWord : skipWords) {
             addSkipWord(skipWord);

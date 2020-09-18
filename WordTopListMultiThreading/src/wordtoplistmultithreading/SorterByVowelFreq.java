@@ -38,7 +38,7 @@ public class SorterByVowelFreq implements WordStore {
         if (word.length() > 1 && !skipWords.contains(word) && !wordVowelFreq.containsKey(word)) {
             double vowelFreq = countVowels(word) / (double) word.length();
             wordVowelFreq.put(word, vowelFreq);
-            if (word.length() > 12) {
+            if (word.length() > 12) { // TODO LP: please delete this condition, I would liket ot see all the words even if it makes the app slow
                 LOG.log(Level.INFO, Thread.currentThread().getName() + " added word={ " + word);
             }
         }

@@ -34,7 +34,7 @@ public class SorterByFrequency implements WordStore {
     public synchronized void store(String word) {
         if (word.length() > 1 && !skipWords.contains(word)) {
             wordFrequency.put(word, wordFrequency.getOrDefault(word, 0) + 1);
-            if (word.length() > 12) {
+            if (word.length() > 12) { // TODO LP: please delete this condition, I would liket ot see all the words even if it makes the app slow
                 LOG.log(Level.INFO, Thread.currentThread().getName() + " added word={ " + word);
             }
         }

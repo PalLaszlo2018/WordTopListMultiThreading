@@ -61,7 +61,6 @@ public class WordTopListMultiThreading {
      * @param skipWords
      * @throws IOException 
      */
-
     private static void checkFrequency(List<URL> urlList, Set<String> skipWords) throws IOException { 
         WordStore wordStoreFreq = new SorterByFrequency();
         WordCollection wordCollectionFreq = new WordCollection(urlList, wordStoreFreq, skipWords);
@@ -75,7 +74,6 @@ public class WordTopListMultiThreading {
      * @param skipWords
      * @throws IOException 
      */
-
     private static void checkLongest(List<URL> urlList, Set<String> skipWords) throws IOException {
         WordStore wordStoreLen = new SorterByLength();
         WordCollection wordCollectionLen = new WordCollection(urlList, wordStoreLen, skipWords);
@@ -89,7 +87,6 @@ public class WordTopListMultiThreading {
      * @param skipWords
      * @throws IOException 
      */
-
     private static void checkVowelFreq(List<URL> urlList, Set<String> skipWords) throws IOException {     
         WordStore wordStoreVowel = new SorterByVowelFreq();
         WordCollection wordCollectionVowel = new WordCollection(urlList, wordStoreVowel, skipWords);
